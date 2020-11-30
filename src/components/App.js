@@ -3,24 +3,27 @@ import './App.css';
 import First from './First/First';
 
 class App extends Component {
+
   state = {
-    persons: [
-      { name:"John Doe", email:"john@mail.com", address:"Dhanmondi, Dhaka" },
-      { name:"Kevin Smith", email:"kevin@mail.com", address:"Banani, Dhaka" },
-      { name:"Bratt Lee", email:"lee@mail.com", address:"Sydeny, Australia" }
-    ]
-  };
+    name: ''
+  }
+
+  inputHandler = (e) => {
+    this.setState({
+      name: e.target.value
+    })
+  }
+
   render() {
     return (
       <div className="App">
-        { this.state.persons.map((person, index) => {
-          return <First
-                  key={ index }
-                  name={ person.name }
-                  email={ person.email }
-                  address={ person.address }
-                />
-        })}
+        <div className="container my-3">
+          <input type="text" onChange={ this.inputHandler } value={ this.state.name } className="form-input"/>&nbsp;
+          <button onClick={ (e) => console.log(e.target) } className="btn btn-primary">
+            Click Here
+          </button>
+          { this.state.name ? <p className="text-success">Hello { this.state.name }!</p> : '' }
+        </div>
       </div>
     );
   }
