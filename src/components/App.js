@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import First from './First/First';
+import Example from './Example';
 
 class App extends Component {
 
@@ -23,6 +23,7 @@ class App extends Component {
             Click Here
           </button>
           { this.state.name ? <p className="text-success">Hello { this.state.name }!</p> : '' }
+          <Example content='I am a Stateless Component' />
         </div>
       </div>
     );
