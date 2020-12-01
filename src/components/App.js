@@ -35,10 +35,25 @@ class App extends Component {
     })
   }
 
+  editHandler = (name, id) => {
+    let newBooks = this.state.books.map(book => {
+      if (book.id === id) {
+        return {
+          ...book,
+          name
+        }
+      }
+      return book
+    })
+    this.setState({
+      books: newBooks
+    })
+  }
+
   render() {
     return (
       <div className="App">
-        <Books deleteHandler={ this.deleteHandler.bind(this) } books={ this.state.books } />
+        <Books deleteHandler={ this.deleteHandler.bind(this) } editHandler={ this.editHandler.bind(this) } books={ this.state.books } />
       </div>
     );
   }
