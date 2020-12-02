@@ -1,61 +1,40 @@
 import React, { Component } from 'react';
-import Books from './Books/Books';
+import axios from 'axios';
+import PostForm from './forms/PostForm';
 
 class App extends Component {
 
   state = {
-    books: [
-      {
-        id: 1,
-        name: 'Javascript',
-        price: 20
-      },
-      {
-        id: 2,
-        name: 'React',
-        price: 29
-      },
-      {
-        id: 3,
-        name: 'Redux',
-        price: 33
-      },
-      {
-        id: 4,
-        name: 'React Native',
-        price: 25
-      }
-    ]
+    posts: []
   }
 
-  deleteHandler = (id) => {
-    let newBooks = this.state.books.filter(book => book.id != id)
-    this.setState({
-      books: newBooks
-    })
+  componentDidMount() {
+    axios.get("https://jsonplaceholder.typicode.com/posts")
+      .then(response => {
+        this.setState({
+          posts: response.data
+        })
+      })
+      .catch(error => console.log(error))
   }
-
-  editHandler = (name, id) => {
-    let newBooks = this.state.books.map(book => {
-      if (book.id === id) {
-        return {
-          ...book,
-          name
-        }
-      }
-      return book
-    })
-    this.setState({
-      books: newBooks
-    })
-  }
-
   render() {
-    return (
-      <div className="App">
-        <Books deleteHandler={ this.deleteHandler.bind(this) } editHandler={ this.editHandler.bind(this) } books={ this.state.books } />
-      </div>
-    );
+    console.log(this.state.posts)
+    let { posts } = this.state
+    if (posts.length === 0) {
+      return (
+        <h1 style={{ textAlign: 'center', verticalAlign: 'middle' }}>Loading....</h1>
+      )
+    } else {
+      return (
+        <div className="container">
+          <div className="row">
+            <div className="col-sm-8 offset-sm-2">
+              <PostForm />
+            </div>
+          </div>
+        </div>
+      );
+    }
   }
 }
 
